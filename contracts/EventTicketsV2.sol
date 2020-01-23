@@ -11,6 +11,12 @@ contract EventTicketsV2 {
     address public owner;
     uint   PRICE_TICKET = 100 wei;
 
+    constructor()
+    public
+    {
+        owner = msg.sender;
+    }
+
     /*
         Create a variable to keep track of the event ID numbers.
     */
@@ -69,15 +75,15 @@ contract EventTicketsV2 {
     function addEvent(string memory _description, string memory _website, uint _tickets)
     public
     isOwner()
-    returns(uint idGenerator)
+    returns(uint eventId)
     {
-        events[idGenerator].description = _description;
-        events[idGenerator].website = _website;
-        events[idGenerator].totalTickets = _tickets;
-        events[idGenerator].isOpen = true;
-        idGenerator = idGenerator + 1;
-        emit LogEventAdded(_description, _website, _tickets, idGenerator);
-        return(idGenerator);
+        events[eventId].description = _description;
+        events[eventId].website = _website;
+        events[eventId].totalTickets = _tickets;
+        events[eventId].isOpen = true;
+        eventId = eventId + 1;
+        emit LogEventAdded(_description, _website, _tickets, eventId);
+        return(eventId);
     }
 
     /*
@@ -90,13 +96,13 @@ contract EventTicketsV2 {
             4. sales
             5. isOpen
     */
-    function readEvent(uint idEvent)
+    function readEvent(uint eventId)
     public
     view
     returns(string memory desctription, string memory website, uint totalTickets, uint sales, bool isOpen)
     {
-        return(events[idGenerator].description, events[idGenerator].website,
-        events[idGenerator].totalTickets, events[idGenerator].sales, events[idGenerator].isOpen);
+        return(events[eventId].description, events[eventId].website,
+        events[eventId].totalTickets, events[eventId].sales, events[eventId].isOpen);
     }
 
     /*
@@ -117,12 +123,13 @@ contract EventTicketsV2 {
     public
     payable
     {
-        require(events[idGenerator].isOpen = true, "Event is not open");
-        require(msg.value >= events[idGenerator].totalTickets * PRICE_TICKET, "Not enough funds");
-        require(events[idGenerator].totalTickets >= tickets, "Not enough tickets");
-
+        require(events[eventId].isOpen = true, "Event is not open");
+        require(msg.value >= events[eventId].totalTickets * PRICE_TICKET, "Not enough funds");
+        require(events[eventId].totalTickets >= tickets, "Not enough tickets");
+        events[eventId].buyers[msg.sender] = tickets;
+        events[eventId].sales = events[eventId].sales + tickets;
+        msg.sender.transfer(msg.value - (PRICE_TICKET * tickets));
         emit LogBuyTickets(msg.sender, eventId, tickets);
-
     }
 
     /*
