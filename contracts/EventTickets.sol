@@ -113,12 +113,13 @@ contract EventTickets {
     public
     payable
     {
-        require(myEvent.isOpen == true);
-        require(tickets * TICKET_PRICE <= msg.value);
-        require(tickets <= myEvent.totalTickets - myEvent.sales);
+        require(myEvent.isOpen == true, "Event is not open");
+        require(tickets * TICKET_PRICE <= msg.value, "Not enough amount");
+        require(tickets <= myEvent.totalTickets - myEvent.sales, "Not enough tickets in stock");
         myEvent.buyers[msg.sender] = tickets;
-        myEvent.totalTickets = myEvent.totalTickets - myEvent.sales;
+        myEvent.sales = myEvent.sales + tickets;
         msg.sender.transfer(msg.value - (tickets * TICKET_PRICE));
+        emit LogBuyTickets(msg.sender, myEvent.buyers[msg.sender]);
     }
 
     /*
@@ -134,7 +135,7 @@ contract EventTickets {
     public
     payable
     {
-        require(myEvent.buyers[msg.sender]>0);
+        require(myEvent.buyers[msg.sender]>0, "Requester has not purchased any tickets");
         myEvent.totalTickets = myEvent.totalTickets + myEvent.buyers[msg.sender];
         msg.sender.transfer(msg.value);
         emit LogGetRefund(msg.sender, msg.value);
