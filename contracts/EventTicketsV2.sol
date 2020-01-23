@@ -123,13 +123,13 @@ contract EventTicketsV2 {
     public
     payable
     {
-        require(events[eventId].isOpen = true, "Event is not open");
+        require(events[eventId].isOpen == true, "Event is not open");
         require(msg.value >= events[eventId].totalTickets * PRICE_TICKET, "Not enough funds");
-        require(events[eventId].totalTickets >= tickets, "Not enough tickets");
+        require(events[eventId].totalTickets - events[eventId].sales >= tickets, "Not enough tickets");
         events[eventId].buyers[msg.sender] = tickets;
         events[eventId].sales = events[eventId].sales + tickets;
         msg.sender.transfer(msg.value - (PRICE_TICKET * tickets));
-        emit LogBuyTickets(msg.sender, eventId, events[eventId].buyers[msg.sender]);
+        emit LogBuyTickets(msg.sender, eventId, tickets);
     }
 
     /*

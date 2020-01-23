@@ -119,7 +119,7 @@ contract EventTickets {
         myEvent.buyers[msg.sender] = tickets;
         myEvent.sales = myEvent.sales + tickets;
         msg.sender.transfer(msg.value - (tickets * TICKET_PRICE));
-        emit LogBuyTickets(msg.sender, myEvent.buyers[msg.sender]);
+        emit LogBuyTickets(msg.sender, tickets);
     }
 
     /*
@@ -135,7 +135,7 @@ contract EventTickets {
     public
     payable
     {
-        require(myEvent.buyers[msg.sender]>0, "Requester has not purchased any tickets");
+        require(myEvent.buyers[msg.sender] != 0, "Requester has not purchased any tickets");
         myEvent.totalTickets = myEvent.totalTickets + myEvent.buyers[msg.sender];
         msg.sender.transfer(TICKET_PRICE * myEvent.buyers[msg.sender]);
         emit LogGetRefund(msg.sender, msg.value);
