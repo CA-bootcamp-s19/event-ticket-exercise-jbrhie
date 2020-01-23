@@ -137,7 +137,7 @@ contract EventTickets {
     {
         require(myEvent.buyers[msg.sender]>0, "Requester has not purchased any tickets");
         myEvent.totalTickets = myEvent.totalTickets + myEvent.buyers[msg.sender];
-        msg.sender.transfer(msg.value);
+        msg.sender.transfer(TICKET_PRICE * myEvent.buyers[msg.sender]);
         emit LogGetRefund(msg.sender, msg.value);
     }
 
@@ -159,6 +159,6 @@ contract EventTickets {
         "Only the owner can call this function");
         myEvent.isOpen = false;
         msg.sender.transfer(TICKET_PRICE * myEvent.sales);
-        emit LogEndSale(msg.sender, TICKET_PRICE * myEvent.sales);
+        emit LogEndSale(msg.sender, (TICKET_PRICE * myEvent.sales));
     }
 }

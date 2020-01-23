@@ -129,7 +129,7 @@ contract EventTicketsV2 {
         events[eventId].buyers[msg.sender] = tickets;
         events[eventId].sales = events[eventId].sales + tickets;
         msg.sender.transfer(msg.value - (PRICE_TICKET * tickets));
-        emit LogBuyTickets(msg.sender, eventId, tickets);
+        emit LogBuyTickets(msg.sender, eventId, events[eventId].buyers[msg.sender]);
     }
 
     /*
@@ -146,7 +146,7 @@ contract EventTicketsV2 {
     public
     payable
     {
-        require(events[eventId].buyers[msg.sender] > 0, "User has not purchased ticket for the event");
+        require(events[eventId].buyers[msg.sender] != 0, "User has not purchased ticket for the event");
         events[eventId].sales = events[eventId].sales - events[eventId].buyers[msg.sender];
         msg.sender.transfer(PRICE_TICKET * events[eventId].buyers[msg.sender]);
         emit LogGetRefund(msg.sender, eventId, events[eventId].buyers[msg.sender]);
@@ -181,6 +181,6 @@ contract EventTicketsV2 {
     {
         events[eventId].isOpen = false;
         msg.sender.transfer(PRICE_TICKET * events[eventId].sales);
-        emit LogEndSale(msg.sender, PRICE_TICKET * events[eventId].sales, eventId);
+        emit LogEndSale(msg.sender, (PRICE_TICKET * events[eventId].sales), eventId);
     }
 }
