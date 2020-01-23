@@ -181,6 +181,6 @@ contract EventTicketsV2 {
     {
         events[eventId].isOpen = false;
         msg.sender.transfer(PRICE_TICKET * events[eventId].sales);
-        emit LogEndSale(msg.sender, (PRICE_TICKET * events[eventId].sales), eventId);
+        emit LogEndSale(msg.sender, PRICE_TICKET*events[eventId].sales, eventId);
     }
 }

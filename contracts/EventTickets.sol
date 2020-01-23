@@ -91,7 +91,8 @@ contract EventTickets {
     view
     returns(uint tickets)
     {
-        return myEvent.buyers[buyer];
+        tickets = myEvent.buyers[buyer];
+        return tickets;
     }
 
     /*
@@ -154,11 +155,12 @@ contract EventTickets {
     function endSale()
     public
     payable
+    isOwner()
     {
         require(owner==msg.sender,
         "Only the owner can call this function");
         myEvent.isOpen = false;
         msg.sender.transfer(TICKET_PRICE * myEvent.sales);
-        emit LogEndSale(msg.sender, (TICKET_PRICE * myEvent.sales));
+        emit LogEndSale(msg.sender, TICKET_PRICE*myEvent.sales);
     }
 }
