@@ -21,6 +21,7 @@ contract EventTicketsV2 {
         Create a variable to keep track of the event ID numbers.
     */
     uint public idGenerator;
+     
 
     /*
         Define an Event struct, similar to the V1 of this contract.
@@ -81,7 +82,7 @@ contract EventTicketsV2 {
         events[eventId].website = _website;
         events[eventId].totalTickets = _tickets;
         events[eventId].isOpen = true;
-        idGenerator = eventId;
+        eventId = idGenerator;
         idGenerator = idGenerator + 1;
         emit LogEventAdded(_description, _website, _tickets, eventId);
         return(eventId);
