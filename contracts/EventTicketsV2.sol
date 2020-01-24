@@ -20,7 +20,8 @@ contract EventTicketsV2 {
     /*
         Create a variable to keep track of the event ID numbers.
     */
-    uint public idGenerator = 1;
+    uint public idGenerator;
+    uint public eventId;
     
     /*
         Define an Event struct, similar to the V1 of this contract.
