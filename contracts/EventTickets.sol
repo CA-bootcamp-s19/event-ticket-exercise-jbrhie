@@ -116,7 +116,7 @@ contract EventTickets {
     {
         require(myEvent.isOpen == true, "Event is not open");
         require(tickets * TICKET_PRICE <= msg.value, "Not enough amount");
-        require(tickets <= myEvent.totalTickets - myEvent.sales, "Not enough tickets in stock");
+        require(tickets <= (myEvent.totalTickets - myEvent.sales), "Not enough tickets in stock");
         myEvent.buyers[msg.sender] = tickets;
         myEvent.sales = myEvent.sales + tickets;
         msg.sender.transfer(msg.value - (tickets * TICKET_PRICE));

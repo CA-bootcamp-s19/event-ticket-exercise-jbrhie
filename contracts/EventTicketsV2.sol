@@ -91,7 +91,7 @@ contract EventTicketsV2 {
         This function takes one parameter, the event ID.
         The function returns information about the event this order:
             1. description
-            2. URL
+            2. URL<= (myE
             3. tickets available
             4. sales
             5. isOpen
