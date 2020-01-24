@@ -20,9 +20,8 @@ contract EventTicketsV2 {
     /*
         Create a variable to keep track of the event ID numbers.
     */
-    uint public idGenerator;
-     
-
+    uint public idGenerator = 1;
+    
     /*
         Define an Event struct, similar to the V1 of this contract.
         The struct has 6 fields: description, website (URL), totalTickets, sales, buyers, and isOpen.
