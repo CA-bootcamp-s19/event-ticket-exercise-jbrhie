@@ -125,7 +125,7 @@ contract EventTicketsV2 {
     payable
     {
         require(events[eventId].isOpen == true, "Event is not open");
-        require(msg.value >= events[eventId].totalTickets * PRICE_TICKET, "Not enough funds");
+        require(msg.value >= tickets * PRICE_TICKET, "Not enough funds");
         require(tickets <= (events[eventId].totalTickets - events[eventId].sales), "Not enough tickets");
         events[eventId].buyers[msg.sender] = tickets;
         events[eventId].sales = events[eventId].sales + tickets;
