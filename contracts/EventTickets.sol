@@ -111,7 +111,7 @@ contract EventTickets {
             - emit the appropriate event
     */
     function buyTickets(uint tickets)
-    public
+    external
     payable
     {
         require(myEvent.isOpen == true, "Event is not open");
