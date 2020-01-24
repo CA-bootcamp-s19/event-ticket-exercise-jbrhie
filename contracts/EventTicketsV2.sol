@@ -20,7 +20,7 @@ contract EventTicketsV2 {
     /*
         Create a variable to keep track of the event ID numbers.
     */
-    uint public idGenerator;
+    uint public idGenerator = 0;
     uint public eventId;
     
     /*
