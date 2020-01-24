@@ -81,7 +81,8 @@ contract EventTicketsV2 {
         events[eventId].website = _website;
         events[eventId].totalTickets = _tickets;
         events[eventId].isOpen = true;
-        eventId = eventId + 1;
+        eventId = idGenerator;
+        idGenerator = idGenerator + 1;
         emit LogEventAdded(_description, _website, _tickets, eventId);
         return(eventId);
     }
