@@ -21,7 +21,6 @@ contract EventTicketsV2 {
         Create a variable to keep track of the event ID numbers.
     */
     uint public idGenerator = 0;
-    uint public eventId;
     
     /*
         Define an Event struct, similar to the V1 of this contract.
@@ -78,10 +77,10 @@ contract EventTicketsV2 {
     isOwner()
     returns(uint eventId)
     {
-        events[eventId].description = _description;
-        events[eventId].website = _website;
-        events[eventId].totalTickets = _tickets;
-        events[eventId].isOpen = true;
+        events[idGenerator].description = _description;
+        events[idGenerator].website = _website;
+        events[idGenerator].totalTickets = _tickets;
+        events[idGenerator].isOpen = true;
         eventId = idGenerator;
         idGenerator = idGenerator + 1;
         emit LogEventAdded(_description, _website, _tickets, eventId);
